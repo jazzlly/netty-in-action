@@ -36,6 +36,7 @@ public class EchoServer {
 
     public void start() throws Exception {
         final EchoServerHandler serverHandler = new EchoServerHandler();
+        final EchoServerHandler2 serverHandler2 = new EchoServerHandler2();
         EventLoopGroup group = new NioEventLoopGroup();
         try {
             ServerBootstrap b = new ServerBootstrap();
@@ -46,6 +47,7 @@ public class EchoServer {
                     @Override
                     public void initChannel(SocketChannel ch) throws Exception {
                         ch.pipeline().addLast(serverHandler);
+                        ch.pipeline().addLast(serverHandler2);
                     }
                 });
 

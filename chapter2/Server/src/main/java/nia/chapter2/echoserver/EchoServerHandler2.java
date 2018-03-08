@@ -14,22 +14,21 @@ import io.netty.util.CharsetUtil;
  * @author <a href="mailto:norman.maurer@gmail.com">Norman Maurer</a>
  */
 @Sharable
-public class EchoServerHandler extends ChannelInboundHandlerAdapter {
+public class EchoServerHandler2 extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
         ByteBuf in = (ByteBuf) msg;
-        System.out.println("handler 1 received: " + in.toString(CharsetUtil.UTF_8));
-        ctx.fireChannelRead(msg);
-        // ctx.write(in);
+        System.out.println(
+                "Handler 2 received: " + in.toString(CharsetUtil.UTF_8));
+        ctx.write(in);
     }
 
     @Override
     public void channelReadComplete(ChannelHandlerContext ctx)
             throws Exception {
-//        ctx.writeAndFlush(Unpooled.EMPTY_BUFFER)
-//                .addListener(ChannelFutureListener.CLOSE);
-        System.out.println("handler 1 received completed! ");
-        ctx.fireChannelReadComplete();
+        System.out.println("handler 2 received completed! ");
+        ctx.writeAndFlush(Unpooled.EMPTY_BUFFER)
+                .addListener(ChannelFutureListener.CLOSE);
     }
 
     @Override
